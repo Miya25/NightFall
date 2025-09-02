@@ -32,7 +32,7 @@ export const metadata: Metadata = {
     "nextjs",
     "react",
   ],
-  authors: [{ name: "Ranveer Soni", url: "https://ranveersoni.me" }],
+  authors: [{ name: "Ranveer Soni" }],
   creator: "@ranveersoni98",
   openGraph: {
     title: "Nightfall — Elegant Clock Dashboard",
