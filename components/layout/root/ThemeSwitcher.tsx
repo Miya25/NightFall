@@ -112,7 +112,7 @@ export const ThemeSwitcher = () => {
               />
               <div className="flex-1">
                 <div className="font-medium">{themeOption.name}</div>
-                <div className="text-xs text-muted-foreground">
+                <div className="text-xs text-foreground/70 hover:text-foreground/90 transition-colors">
                   {themeOption.description}
                 </div>
               </div>
