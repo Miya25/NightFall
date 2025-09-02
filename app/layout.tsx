@@ -86,6 +86,12 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   themeColor: "#0b0b10",
+  viewport: {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
 };
 
 export default function RootLayout({

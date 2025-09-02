@@ -58,74 +58,79 @@ export const TimezoneSelector = ({
   };
 
   return (
-    <div className="flex items-center gap-2">
-      <FaGlobeAmericas className="text-primary w-5 h-5" />
+    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full sm:w-auto">
+      <div className="flex items-center gap-2 w-full sm:w-auto">
+        <FaGlobeAmericas className="text-primary w-4 h-4 sm:w-5 sm:h-5 flex-shrink-0" />
 
-      {showCustomInput ? (
-        <motion.form
-          initial={{ opacity: 0, width: 0 }}
-          animate={{ opacity: 1, width: "auto" }}
-          onSubmit={handleCustomTimezone}
-          className="flex gap-2"
-        >
-          <Input
-            type="text"
-            value={customTimezone}
-            onChange={(e) => setCustomTimezone(e.target.value)}
-            placeholder="e.g., America/New_York"
-            className="w-64"
-          />
-          <Button type="submit" size="sm">
-            Set
-          </Button>
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={() => setShowCustomInput(false)}
+        {showCustomInput ? (
+          <motion.form
+            initial={{ opacity: 0, width: 0 }}
+            animate={{ opacity: 1, width: "auto" }}
+            onSubmit={handleCustomTimezone}
+            className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto"
           >
-            Cancel
-          </Button>
-        </motion.form>
-      ) : (
-        <>
-          <Select value={value || undefined} onValueChange={onChange}>
-            <SelectTrigger className="w-64 bg-card/60 border-border text-white placeholder:text-gray-400 hover:bg-card/80 hover:text-white/90 transition-colors">
-              <SelectValue placeholder={getCurrentTimezoneLabel()} />
-            </SelectTrigger>
-            <SelectContent className="bg-card border-border text-white max-h-48 overflow-auto">
-              {!isInList && value && (
-                <SelectItem
-                  key={value}
-                  value={value}
-                  className="hover:bg-muted/60 focus:bg-muted/60 hover:text-white cursor-pointer text-gray-300"
-                >
-                  {value} (detected)
-                </SelectItem>
-              )}
-              {timezones.map((timezone) => (
-                <SelectItem
-                  key={timezone.value}
-                  value={timezone.value}
-                  className="hover:bg-muted/60 focus:bg-muted/60 hover:text-white cursor-pointer text-gray-300"
-                >
-                  {timezone.label}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            <Input
+              type="text"
+              value={customTimezone}
+              onChange={(e) => setCustomTimezone(e.target.value)}
+              placeholder="e.g., America/New_York"
+              className="w-full sm:w-64 text-sm sm:text-base"
+            />
+            <div className="flex gap-2">
+              <Button type="submit" size="sm" className="text-sm">
+                Set
+              </Button>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => setShowCustomInput(false)}
+                className="text-sm"
+              >
+                Cancel
+              </Button>
+            </div>
+          </motion.form>
+        ) : (
+          <>
+            <Select value={value || undefined} onValueChange={onChange}>
+              <SelectTrigger className="w-full sm:w-64 bg-card/60 border-border text-white placeholder:text-gray-400 hover:bg-card/80 hover:text-white/90 transition-colors text-sm sm:text-base">
+                <SelectValue placeholder={getCurrentTimezoneLabel()} />
+              </SelectTrigger>
+              <SelectContent className="bg-card border-border text-white max-h-48 overflow-auto">
+                {!isInList && value && (
+                  <SelectItem
+                    key={value}
+                    value={value}
+                    className="hover:bg-muted/60 focus:bg-muted/60 hover:text-white cursor-pointer text-gray-300"
+                  >
+                    {value} (detected)
+                  </SelectItem>
+                )}
+                {timezones.map((timezone) => (
+                  <SelectItem
+                    key={timezone.value}
+                    value={timezone.value}
+                    className="hover:bg-muted/60 focus:bg-muted/60 hover:text-white cursor-pointer text-gray-300"
+                  >
+                    {timezone.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setShowCustomInput(true)}
-            className="p-2"
-            title="Enter custom timezone"
-          >
-            <FaKeyboard className="w-4 h-4" />
-          </Button>
-        </>
-      )}
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowCustomInput(true)}
+              className="p-1.5 sm:p-2 flex-shrink-0"
+              title="Enter custom timezone"
+            >
+              <FaKeyboard className="w-3 h-3 sm:w-4 sm:h-4" />
+            </Button>
+          </>
+        )}
+      </div>
     </div>
   );
 };

@@ -40,9 +40,9 @@ export const ClockStyleSelector = ({
   ];
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full sm:w-auto">
       <span className="text-primary font-medium text-sm">Style:</span>
-      <div className="flex gap-2">
+      <div className="grid grid-cols-2 sm:flex gap-2 w-full sm:w-auto">
         {styles.map((style) => {
           const Icon = style.icon;
           const isActive = value === style.id;
@@ -54,7 +54,7 @@ export const ClockStyleSelector = ({
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               className={`
-                relative px-4 py-2 rounded-lg border transition-all duration-300 flex items-center gap-2
+                relative px-3 sm:px-4 py-2 rounded-lg border transition-all duration-300 flex items-center justify-center sm:justify-start gap-1.5 sm:gap-2 text-center sm:text-left
                 ${
                   isActive
                     ? "bg-primary text-primary-foreground border-primary shadow-glow"
@@ -63,8 +63,8 @@ export const ClockStyleSelector = ({
               `}
               title={style.description}
             >
-              <Icon className="w-4 h-4" />
-              <span className="text-sm font-medium">{style.name}</span>
+              <Icon className="w-3 h-3 sm:w-4 sm:h-4" />
+              <span className="text-xs sm:text-sm font-medium">{style.name}</span>
 
               {isActive && (
                 <motion.div

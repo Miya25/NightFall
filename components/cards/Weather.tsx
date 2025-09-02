@@ -198,13 +198,13 @@ export const WeatherWidget = ({ onWeatherUpdate }: WeatherWidgetProps) => {
 
   if (weatherQuery.isLoading) {
     return (
-      <div className="card-gothic p-6">
-        <h3 className="text-lg font-semibold text-primary mb-4">Weather</h3>
-        <div className="flex items-center justify-center h-32">
+      <div className="card-gothic p-4 sm:p-6">
+        <h3 className="text-base sm:text-lg font-semibold text-primary mb-3 sm:mb-4">Weather</h3>
+        <div className="flex items-center justify-center h-24 sm:h-32">
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full"
+            className="w-6 h-6 sm:w-8 sm:h-8 border-2 border-primary border-t-transparent rounded-full"
           />
         </div>
       </div>
@@ -213,9 +213,9 @@ export const WeatherWidget = ({ onWeatherUpdate }: WeatherWidgetProps) => {
 
   if (!weatherQuery.data) {
     return (
-      <div className="card-gothic p-6">
-        <h3 className="text-lg font-semibold text-primary mb-4">Weather</h3>
-        <p className="text-muted-foreground">Unable to load weather data</p>
+      <div className="card-gothic p-4 sm:p-6">
+        <h3 className="text-base sm:text-lg font-semibold text-primary mb-3 sm:mb-4">Weather</h3>
+        <p className="text-muted-foreground text-sm sm:text-base">Unable to load weather data</p>
       </div>
     );
   }
@@ -225,27 +225,27 @@ export const WeatherWidget = ({ onWeatherUpdate }: WeatherWidgetProps) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      className="card-glow p-6 hover:bg-card/80 transition-colors group"
+      className="card-glow p-4 sm:p-6 hover:bg-card/80 transition-colors group"
     >
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-lg font-semibold text-primary text-glow-primary">
+      <div className="flex items-center justify-between mb-3 sm:mb-4">
+        <h3 className="text-base sm:text-lg font-semibold text-primary text-glow-primary">
           Weather
         </h3>
-        <div className="flex gap-2">
+        <div className="flex gap-1 sm:gap-2">
           <Button
             size="sm"
             variant="ghost"
             onClick={() => setShowLocationInput(!showLocationInput)}
-            className="p-2"
+            className="p-1.5 sm:p-2"
           >
-            <FaMapMarkerAlt className="w-4 h-4" />
+            <FaMapMarkerAlt className="w-3 h-3 sm:w-4 sm:h-4" />
           </Button>
           <Button
             size="sm"
             variant="ghost"
             onClick={() => weatherQuery.refetch()}
             disabled={weatherQuery.isFetching}
-            className="p-2"
+            className="p-1.5 sm:p-2"
           >
             <motion.div
               animate={{ rotate: weatherQuery.isFetching ? 360 : 0 }}
@@ -255,7 +255,7 @@ export const WeatherWidget = ({ onWeatherUpdate }: WeatherWidgetProps) => {
                 ease: "linear",
               }}
             >
-              <FaSyncAlt className="w-4 h-4" />
+              <FaSyncAlt className="w-3 h-3 sm:w-4 sm:h-4" />
             </motion.div>
           </Button>
         </div>
@@ -267,22 +267,22 @@ export const WeatherWidget = ({ onWeatherUpdate }: WeatherWidgetProps) => {
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
           onSubmit={handleLocationSubmit}
-          className="mb-4 flex gap-2"
+          className="mb-3 sm:mb-4 flex gap-2"
         >
           <Input
             type="text"
             value={customLocation}
             onChange={(e) => setCustomLocation(e.target.value)}
             placeholder="Enter city name..."
-            className="flex-1"
+            className="flex-1 text-sm sm:text-base"
           />
-          <Button type="submit" size="sm">
+          <Button type="submit" size="sm" className="text-sm">
             Set
           </Button>
         </motion.form>
       )}
 
-      <div className="text-center mb-4">
+      <div className="text-center mb-3 sm:mb-4">
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
@@ -291,47 +291,47 @@ export const WeatherWidget = ({ onWeatherUpdate }: WeatherWidgetProps) => {
         >
           {getWeatherIcon(weatherQuery.data.condition)}
         </motion.div>
-        <div className="text-3xl font-bold text-primary text-glow-primary group-hover:text-white transition-colors">
+        <div className="text-2xl sm:text-3xl font-bold text-primary text-glow-primary group-hover:text-white transition-colors">
           {weatherQuery.data.temperature}°C
         </div>
-        <div className="text-sm text-muted-foreground capitalize group-hover:text-white/80 transition-colors">
+        <div className="text-xs sm:text-sm text-muted-foreground capitalize group-hover:text-white/80 transition-colors">
           {weatherQuery.data.condition}
         </div>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-2 sm:space-y-3">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-secondary group-hover:text-white transition-colors">
-            <WiThermometer size={20} />
-            <span className="text-sm">Feels like</span>
+          <div className="flex items-center gap-1.5 sm:gap-2 text-secondary group-hover:text-white transition-colors">
+            <WiThermometer size={16} className="sm:w-5 sm:h-5" />
+            <span className="text-xs sm:text-sm">Feels like</span>
           </div>
-          <span className="text-sm font-medium group-hover:text-white transition-colors">
+          <span className="text-xs sm:text-sm font-medium group-hover:text-white transition-colors">
             {weatherQuery.data.temperature}°C
           </span>
         </div>
 
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-secondary group-hover:text-white transition-colors">
-            <WiHumidity size={20} />
-            <span className="text-sm">Humidity</span>
+          <div className="flex items-center gap-1.5 sm:gap-2 text-secondary group-hover:text-white transition-colors">
+            <WiHumidity size={16} className="sm:w-5 sm:h-5" />
+            <span className="text-xs sm:text-sm">Humidity</span>
           </div>
-          <span className="text-sm font-medium group-hover:text-white transition-colors">
+          <span className="text-xs sm:text-sm font-medium group-hover:text-white transition-colors">
             {weatherQuery.data.humidity}%
           </span>
         </div>
 
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-secondary group-hover:text-white transition-colors">
-            <WiStrongWind size={20} />
-            <span className="text-sm">Wind</span>
+          <div className="flex items-center gap-1.5 sm:gap-2 text-secondary group-hover:text-white transition-colors">
+            <WiStrongWind size={16} className="sm:w-5 sm:h-5" />
+            <span className="text-xs sm:text-sm">Wind</span>
           </div>
-          <span className="text-sm font-medium group-hover:text-white transition-colors">
+          <span className="text-xs sm:text-sm font-medium group-hover:text-white transition-colors">
             {weatherQuery.data.windSpeed} km/h
           </span>
         </div>
       </div>
 
-      <div className="mt-4 pt-4 border-t border-border">
+      <div className="mt-3 sm:mt-4 pt-3 sm:pt-4 border-t border-border">
         <p className="text-xs text-muted-foreground text-center">
           {weatherQuery.data.location}
         </p>

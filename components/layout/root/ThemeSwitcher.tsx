@@ -63,19 +63,19 @@ export const ThemeSwitcher = () => {
         <Button
           variant="ghost"
           size="sm"
-          className="group relative overflow-hidden border border-primary/30 hover:border-primary/60 transition-all duration-300"
+          className="group relative overflow-hidden border border-primary/30 hover:border-primary/60 transition-all duration-300 p-2 sm:p-3"
         >
           <motion.div
-            className="flex items-center gap-2 relative z-10"
+            className="flex items-center gap-1.5 sm:gap-2 relative z-10"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
-            <FaPalette className="w-4 h-4" />
+            <FaPalette className="w-3 h-3 sm:w-4 sm:h-4" />
             <Icon
-              className="w-4 h-4 transition-colors duration-300"
+              className="w-3 h-3 sm:w-4 sm:h-4 transition-colors duration-300"
               style={{ color: currentTheme.color }}
             />
-            <span className="text-sm font-medium">Theme</span>
+            <span className="text-xs sm:text-sm font-medium hidden sm:inline">Theme</span>
           </motion.div>
 
           <motion.div

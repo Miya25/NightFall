@@ -52,16 +52,16 @@ export const ClockFace = ({
 
   const renderAnalogClock = () => (
     <div className="w-full max-w-2xl mx-auto">
-      <div className="clock-analog aspect-square relative bg-gradient-radial from-background via-background to-card border-2 border-primary/30 rounded-full p-4">
+      <div className="clock-analog aspect-square relative bg-gradient-radial from-background via-background to-card border-2 border-primary/30 rounded-full p-2 sm:p-4">
         {/* Hour markers */}
         {Array.from({ length: 12 }, (_, i) => (
           <div
             key={i}
-            className="absolute w-1 h-8 bg-clock-numbers rounded-full"
+            className="absolute w-0.5 sm:w-1 h-4 sm:h-8 bg-clock-numbers rounded-full"
             style={{
-              top: "12px",
+              top: "8px",
               left: "50%",
-              transformOrigin: "50% 240px",
+              transformOrigin: "50% 50%",
               transform: `translateX(-50%) rotate(${i * 30}deg)`,
             }}
           />
@@ -70,7 +70,7 @@ export const ClockFace = ({
         {/* Hour numbers */}
         {Array.from({ length: 12 }, (_, i) => {
           const angle = (i * 30 - 90) * (Math.PI / 180);
-          const radius = 220;
+          const radius = 40; // Responsive radius
           const x = Math.cos(angle) * radius;
           const y = Math.sin(angle) * radius;
           const number = i === 0 ? 12 : i;
@@ -78,13 +78,13 @@ export const ClockFace = ({
           return (
             <div
               key={i}
-              className="absolute text-2xl font-bold text-clock-numbers text-glow-primary select-none z-20"
+              className="absolute text-sm sm:text-2xl font-bold text-clock-numbers text-glow-primary select-none z-20"
               style={{
-                left: `calc(50% + ${x}px)`,
-                top: `calc(50% + ${y}px)`,
+                left: `calc(50% + ${x}%)`,
+                top: `calc(50% + ${y}%)`,
                 transform: "translate(-50%, -50%)",
-                width: "40px",
-                height: "40px",
+                width: "2rem",
+                height: "2rem",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -97,9 +97,9 @@ export const ClockFace = ({
 
         {/* Clock hands */}
         <motion.div
-          className="absolute w-2 bg-clock-hands rounded-full origin-bottom glow-primary z-10"
+          className="absolute w-1 sm:w-2 bg-clock-hands rounded-full origin-bottom glow-primary z-10"
           style={{
-            height: "100px",
+            height: "25%",
             left: "50%",
             bottom: "50%",
             transformOrigin: "center bottom",
@@ -109,9 +109,9 @@ export const ClockFace = ({
         />
 
         <motion.div
-          className="absolute w-1 bg-clock-hands rounded-full origin-bottom glow-secondary z-10"
+          className="absolute w-0.5 sm:w-1 bg-clock-hands rounded-full origin-bottom glow-secondary z-10"
           style={{
-            height: "140px",
+            height: "35%",
             left: "50%",
             bottom: "50%",
             transformOrigin: "center bottom",
@@ -123,7 +123,7 @@ export const ClockFace = ({
         <motion.div
           className="absolute w-px bg-accent rounded-full origin-bottom glow-accent z-10"
           style={{
-            height: "160px",
+            height: "40%",
             left: "50%",
             bottom: "50%",
             transformOrigin: "center bottom",
@@ -133,17 +133,17 @@ export const ClockFace = ({
         />
 
         {/* Center dot */}
-        <div className="absolute w-6 h-6 bg-clock-center rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 glow-primary z-20" />
+        <div className="absolute w-3 h-3 sm:w-6 sm:h-6 bg-clock-center rounded-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 glow-primary z-20" />
       </div>
     </div>
   );
 
   const renderDigitalClock = () => (
-    <div className="clock-digital w-full max-w-6xl mx-auto p-8">
-      <div className="text-6xl sm:text-8xl lg:text-9xl font-mono text-primary text-glow-primary mb-6 leading-none text-center">
+    <div className="clock-digital w-full max-w-6xl mx-auto p-4 sm:p-8">
+      <div className="text-4xl sm:text-6xl lg:text-8xl xl:text-9xl font-mono text-primary text-glow-primary mb-4 sm:mb-6 leading-none text-center">
         {formatTime("digital")}
       </div>
-      <div className="text-xl sm:text-2xl text-secondary text-glow-secondary text-center">
+      <div className="text-base sm:text-xl lg:text-2xl text-secondary text-glow-secondary text-center">
         {time.toLocaleDateString("en-US", {
           weekday: "long",
           year: "numeric",
@@ -151,16 +151,16 @@ export const ClockFace = ({
           day: "numeric",
         })}
       </div>
-      <div className="text-lg text-muted-foreground mt-4 text-center">
+      <div className="text-sm sm:text-lg text-muted-foreground mt-2 sm:mt-4 text-center">
         {timezone.replace("_", " ")}
       </div>
     </div>
   );
 
   const renderNeonClock = () => (
-    <div className="clock-neon w-full max-w-6xl mx-auto p-8">
+    <div className="clock-neon w-full max-w-6xl mx-auto p-4 sm:p-8">
       <motion.div
-        className="text-6xl sm:text-8xl lg:text-9xl font-mono text-accent text-glow-accent mb-8 leading-none text-center"
+        className="text-4xl sm:text-6xl lg:text-8xl xl:text-9xl font-mono text-accent text-glow-accent mb-6 sm:mb-8 leading-none text-center"
         animate={{
           textShadow: [
             "0 0 10px currentColor",
@@ -172,7 +172,7 @@ export const ClockFace = ({
       >
         {formatTime("digital")}
       </motion.div>
-      <div className="text-xl sm:text-2xl text-accent/80 text-glow-accent text-center">
+      <div className="text-base sm:text-xl lg:text-2xl text-accent/80 text-glow-accent text-center">
         {time.toLocaleDateString("en-US", {
           weekday: "short",
           month: "short",
@@ -209,7 +209,7 @@ export const ClockFace = ({
       return (
         <MoonPhaseTooltip phase={moonPhase}>
           <motion.div
-            className="absolute -top-6 right-4 text-4xl cursor-help"
+            className="absolute -top-3 sm:-top-6 right-2 sm:right-4 text-2xl sm:text-4xl cursor-help"
             animate={{ rotate: [0, 5, 0] }}
             transition={{ duration: 3, repeat: Infinity, ease: "easeInOut" }}
           >
@@ -222,7 +222,7 @@ export const ClockFace = ({
     if (weather?.condition === "cloudy") {
       return (
         <motion.div
-          className="absolute -top-6 right-4 text-4xl"
+          className="absolute -top-3 sm:-top-6 right-2 sm:right-4 text-2xl sm:text-4xl"
           animate={{ x: [0, 10, 0] }}
           transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -234,7 +234,7 @@ export const ClockFace = ({
     if (weather?.condition === "rainy") {
       return (
         <motion.div
-          className="absolute -top-6 right-4 text-4xl"
+          className="absolute -top-3 sm:-top-6 right-2 sm:right-4 text-2xl sm:text-4xl"
           animate={{ y: [0, 3, 0] }}
           transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
         >
@@ -246,7 +246,7 @@ export const ClockFace = ({
     if (weather?.condition === "snowy") {
       return (
         <motion.div
-          className="absolute -top-6 right-4 text-4xl"
+          className="absolute -top-3 sm:-top-6 right-2 sm:right-4 text-2xl sm:text-4xl"
           animate={{ rotate: [0, 360] }}
           transition={{ duration: 6, repeat: Infinity, ease: "linear" }}
         >
@@ -255,28 +255,28 @@ export const ClockFace = ({
       );
     }
 
-    return <div className="absolute -top-6 right-4 text-4xl">☀️</div>;
+    return <div className="absolute -top-3 sm:-top-6 right-2 sm:right-4 text-2xl sm:text-4xl">☀️</div>;
   };
 
   const renderGothicClock = () => (
     <div className="w-full max-w-7xl mx-auto relative">
-      <div className="card-glow p-12 relative bg-gradient-to-b from-card to-background border-2 border-primary/30">
-        <div className="absolute -top-6 left-1/2 transform -translate-x-1/2 w-20 h-10 bg-gradient-primary rounded-t-full border-2 border-primary/50"></div>
+      <div className="card-glow p-4 sm:p-8 lg:p-12 relative bg-gradient-to-b from-card to-background border-2 border-primary/30">
+        <div className="absolute -top-3 sm:-top-6 left-1/2 transform -translate-x-1/2 w-12 h-6 sm:w-20 sm:h-10 bg-gradient-primary rounded-t-full border-2 border-primary/50"></div>
 
         {renderWeatherElement()}
 
-        <div className="relative z-10 text-center mb-8">
-          <div className="absolute inset-0 border-4 border-primary/20 rounded-lg"></div>
-          <div className="absolute inset-4 border-2 border-accent/30 rounded-lg"></div>
+        <div className="relative z-10 text-center mb-4 sm:mb-8">
+          <div className="absolute inset-0 border-2 sm:border-4 border-primary/20 rounded-lg"></div>
+          <div className="absolute inset-2 sm:inset-4 border-2 border-accent/30 rounded-lg"></div>
 
           <motion.div
-            className="relative z-10 text-6xl sm:text-8xl lg:text-9xl font-serif text-primary text-glow-primary mb-6 leading-none px-8"
+            className="relative z-10 text-3xl sm:text-5xl lg:text-7xl xl:text-9xl font-serif text-primary text-glow-primary mb-4 sm:mb-6 leading-none px-2 sm:px-8"
             style={{ fontFamily: "Georgia, serif" }}
           >
             {formatTime("digital")}
           </motion.div>
 
-          <div className="flex justify-between text-lg text-accent/70 font-serif mb-6 px-16">
+          <div className="flex justify-between text-sm sm:text-lg text-accent/70 font-serif mb-4 sm:mb-6 px-8 sm:px-16">
             <span>XII</span>
             <span>III</span>
             <span>VI</span>
@@ -284,42 +284,42 @@ export const ClockFace = ({
           </div>
         </div>
 
-        <div className="border-t-2 border-primary/30 pt-6">
+        <div className="border-t-2 border-primary/30 pt-4 sm:pt-6">
           <motion.div
-            className="w-6 h-20 bg-gradient-to-b from-primary to-accent rounded-full mx-auto relative"
+            className="w-4 h-12 sm:w-6 sm:h-20 bg-gradient-to-b from-primary to-accent rounded-full mx-auto relative"
             animate={{ rotate: [-5, 5, -5] }}
             transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
           >
-            <div className="absolute bottom-0 w-8 h-8 bg-accent rounded-full -left-1 border-2 border-primary"></div>
+            <div className="absolute bottom-0 w-6 h-6 sm:w-8 sm:h-8 bg-accent rounded-full -left-1 border-2 border-primary"></div>
           </motion.div>
         </div>
 
-        <div className="text-center mt-6">
-          <div className="text-2xl text-secondary text-glow-secondary mb-3">
+        <div className="text-center mt-4 sm:mt-6">
+          <div className="text-lg sm:text-2xl text-secondary text-glow-secondary mb-2 sm:mb-3">
             {time.toLocaleDateString("en-US", {
               weekday: "long",
             })}
           </div>
-          <div className="text-lg text-muted-foreground">
+          <div className="text-sm sm:text-lg text-muted-foreground">
             {time.toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
               day: "numeric",
             })}
           </div>
-          <div className="text-base text-accent mt-3 text-glow-accent">
+          <div className="text-sm sm:text-base text-accent mt-2 sm:mt-3 text-glow-accent">
             {timezone.replace("_", " ").replace("/", " / ")}
           </div>
         </div>
 
-        <div className="absolute top-6 left-6 w-10 h-10 border-l-2 border-t-2 border-primary/50"></div>
-        <div className="absolute top-6 right-6 w-10 h-10 border-r-2 border-t-2 border-primary/50"></div>
-        <div className="absolute bottom-6 left-6 w-10 h-10 border-l-2 border-b-2 border-primary/50"></div>
-        <div className="absolute bottom-6 right-6 w-10 h-10 border-r-2 border-b-2 border-primary/50"></div>
+        <div className="absolute top-4 sm:top-6 left-4 sm:left-6 w-6 h-6 sm:w-10 sm:h-10 border-l-2 border-t-2 border-primary/50"></div>
+        <div className="absolute top-4 sm:top-6 right-4 sm:right-6 w-6 h-6 sm:w-10 sm:h-10 border-r-2 border-t-2 border-primary/50"></div>
+        <div className="absolute bottom-4 sm:bottom-6 left-4 sm:left-6 w-6 h-6 sm:w-10 sm:h-10 border-l-2 border-b-2 border-primary/50"></div>
+        <div className="absolute bottom-4 sm:bottom-6 right-4 sm:right-6 w-6 h-6 sm:w-10 sm:h-10 border-r-2 border-b-2 border-primary/50"></div>
       </div>
 
-      <div className="h-6 bg-gradient-to-r from-card via-primary/20 to-card border-x-2 border-primary/30"></div>
-      <div className="h-3 bg-gradient-to-r from-background via-primary/10 to-background"></div>
+      <div className="h-4 sm:h-6 bg-gradient-to-r from-card via-primary/20 to-card border-x-2 border-primary/30"></div>
+      <div className="h-2 sm:h-3 bg-gradient-to-r from-background via-primary/10 to-background"></div>
     </div>
   );
 
