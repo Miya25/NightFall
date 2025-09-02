@@ -1,36 +1,76 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Nightfall — a sleek time dashboard
 
-## Getting Started
+Dark, elegant, and animated. Features a rich clock with multiple styles, live weather, and rotating facts fetched with React Query.
 
-First, run the development server:
+### Features
+- **Clock styles**: analog, digital, neon, gothic (animated with framer-motion)
+- **Theme system**: custom themes via `next-themes` with a `ThemeSwitcher`
+- **Weather widget**: location-aware mock data with interactive refresh and quick city input
+- **Facts carousel**: fetches multiple facts with **@tanstack/react-query**, auto-rotates, manual controls, and hourly refresh
+- **React Query Devtools**: toggleable devtools baked in (bottom-right)
 
+### Tech stack
+- **Next.js App Router** + TypeScript
+- **Tailwind CSS**
+- **Framer Motion** animations
+- **@tanstack/react-query** + devtools
+- **next-themes** for theme switching
+- **Bun** for fast dev/install
+
+### Quick start
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
+# install deps
+bun install
+
+# run dev
 bun dev
+
+# build & start
+bun run build
+bun run start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open `http://localhost:3000`.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Project layout
+```
+app/
+  layout.tsx          # wraps with AppProviders (Theme + React Query)
+  page.tsx            # renders Layout (Nightfall dashboard)
+components/
+  layout/clock/
+    Layout.tsx        # main page content (export { Layout })
+    components/
+      ClockFaces.tsx  # all clock renderers + moonphase UI
+      ClockStyleSelector.tsx
+  layout/other/
+    FactOfTheDay.tsx  # React Query facts carousel
+    TimezoneSelector.tsx
+    Moonphase.tsx
+    root/ThemeSwitcher.tsx
+  cards/Weather.tsx    # Weather widget
+  others/AppProviders.tsx
+  others/ReactQueryProvider.tsx
+  static/Footer.tsx
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Environment
+No API keys required. Facts use `https://uselessfacts.jsph.pl` (no auth). Weather uses mock data plus browser geolocation when available.
 
-## Learn More
+### Scripts
+```json
+{
+  "dev": "next dev",
+  "build": "next build",
+  "start": "next start",
+  "lint": "next lint"
+}
+```
 
-To learn more about Next.js, take a look at the following resources:
+### Notes
+- The React Query Devtools button appears at the bottom-right.
+- To change default theme or available themes, edit `components/others/ThemeProvider.tsx`.
+- To tweak fact frequency or count, see `FactOfTheDay.tsx` (`factsToShow`, auto-rotate interval, `refetchInterval`).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### License
+MIT

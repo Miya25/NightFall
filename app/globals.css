@@ -2,20 +2,200 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+/* Multi-Theme Gothic Clock System */
 
-@media (prefers-color-scheme: dark) {
+@layer base {
+  .theme-gothic {
+    /* Dark Gothic Base */
+    --background: 240 8% 8%;
+    --foreground: 280 20% 90%;
+    --card: 240 10% 12%;
+    --card-foreground: 280 15% 85%;
+    --popover: 240 12% 10%;
+    --popover-foreground: 280 15% 85%;
+    --primary: 280 80% 65%;
+    --primary-foreground: 240 8% 8%;
+    --primary-glow: 280 90% 75%;
+    --secondary: 220 80% 60%;
+    --secondary-foreground: 240 8% 8%;
+    --secondary-glow: 220 90% 70%;
+    --muted: 240 8% 15%;
+    --muted-foreground: 280 10% 60%;
+    --accent: 160 80% 50%;
+    --accent-foreground: 240 8% 8%;
+    --accent-glow: 160 90% 60%;
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 280 20% 90%;
+    --border: 240 15% 18%;
+    --input: 240 15% 15%;
+    --ring: 280 80% 65%;
+  }
+
+  .theme-blue {
+    --background: 220 15% 8%;
+    --foreground: 220 20% 90%;
+    --card: 220 12% 12%;
+    --card-foreground: 220 15% 85%;
+    --popover: 220 14% 10%;
+    --popover-foreground: 220 15% 85%;
+    --primary: 220 80% 65%;
+    --primary-foreground: 220 15% 8%;
+    --primary-glow: 220 90% 75%;
+    --secondary: 200 70% 60%;
+    --secondary-foreground: 220 15% 8%;
+    --secondary-glow: 200 80% 70%;
+    --muted: 220 10% 15%;
+    --muted-foreground: 220 8% 60%;
+    --accent: 180 70% 50%;
+    --accent-foreground: 220 15% 8%;
+    --accent-glow: 180 80% 60%;
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 220 20% 90%;
+    --border: 220 18% 18%;
+    --input: 220 18% 15%;
+    --ring: 220 80% 65%;
+  }
+
+  .theme-red {
+    --background: 0 15% 8%;
+    --foreground: 0 20% 90%;
+    --card: 0 12% 12%;
+    --card-foreground: 0 15% 85%;
+    --popover: 0 14% 10%;
+    --popover-foreground: 0 15% 85%;
+    --primary: 0 80% 65%;
+    --primary-foreground: 0 15% 8%;
+    --primary-glow: 0 90% 75%;
+    --secondary: 20 70% 60%;
+    --secondary-foreground: 0 15% 8%;
+    --secondary-glow: 20 80% 70%;
+    --muted: 0 10% 15%;
+    --muted-foreground: 0 8% 60%;
+    --accent: 40 70% 50%;
+    --accent-foreground: 0 15% 8%;
+    --accent-glow: 40 80% 60%;
+    --destructive: 350 75% 60%;
+    --destructive-foreground: 0 20% 90%;
+    --border: 0 18% 18%;
+    --input: 0 18% 15%;
+    --ring: 0 80% 65%;
+  }
+
+  .theme-green {
+    --background: 120 15% 8%;
+    --foreground: 120 20% 90%;
+    --card: 120 12% 12%;
+    --card-foreground: 120 15% 85%;
+    --popover: 120 14% 10%;
+    --popover-foreground: 120 15% 85%;
+    --primary: 120 60% 50%;
+    --primary-foreground: 120 15% 8%;
+    --primary-glow: 120 70% 60%;
+    --secondary: 140 50% 45%;
+    --secondary-foreground: 120 15% 8%;
+    --secondary-glow: 140 60% 55%;
+    --muted: 120 10% 15%;
+    --muted-foreground: 120 8% 60%;
+    --accent: 80 60% 45%;
+    --accent-foreground: 120 15% 8%;
+    --accent-glow: 80 70% 55%;
+    --destructive: 0 75% 60%;
+    --destructive-foreground: 120 20% 90%;
+    --border: 120 18% 18%;
+    --input: 120 18% 15%;
+    --ring: 120 60% 50%;
+  }
+
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --radius: 1rem;
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--secondary-glow)));
+    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-glow)));
+    --gradient-dark: linear-gradient(135deg, hsl(var(--background)), hsl(var(--card)));
+    --gradient-glow: radial-gradient(circle at center, hsl(var(--primary) / 0.3), transparent 70%);
+    --clock-face: 240 12% 10%;
+    --clock-numbers: 280 15% 75%;
+    --clock-hands: 280 80% 65%;
+    --clock-center: 280 90% 75%;
+    --clock-glow: 280 80% 65% / 0.5;
+    --weather-sunny: 45 100% 60%;
+    --weather-cloudy: 220 20% 60%;
+    --weather-rainy: 220 80% 50%;
+    --weather-snowy: 200 50% 80%;
+    --shadow-glow: 0 0 30px hsl(var(--primary-glow) / 0.3);
+    --shadow-intense: 0 0 50px hsl(var(--primary-glow) / 0.5);
+    --shadow-subtle: 0 4px 20px hsl(var(--background) / 0.8);
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+@layer base {
+  * { @apply border-border; }
+  
+  body {
+    @apply bg-background text-foreground overflow-x-hidden;
+    background: linear-gradient(135deg, hsl(var(--background)), hsl(var(--card)));
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  }
+
+  .gothic { @apply theme-gothic; }
+  .blue { @apply theme-blue; }
+  .red { @apply theme-red; }
+  .green { @apply theme-green; }
+
+  ::-webkit-scrollbar { width: 8px; }
+  ::-webkit-scrollbar-track { @apply bg-muted rounded-full; }
+  ::-webkit-scrollbar-thumb { 
+    background: var(--gradient-primary); 
+    @apply rounded-full; 
+  }
+  ::-webkit-scrollbar-thumb:hover { background: var(--gradient-secondary); }
+}
+
+@layer components {
+  /* ... keep existing code (clock styles and components) */
+  .clock-analog {
+    @apply relative w-full h-full rounded-full border-4 border-primary/30 shadow-lg;
+    background: radial-gradient(circle, hsl(var(--clock-face)), hsl(var(--background)));
+    box-shadow: 
+      inset 0 0 30px hsl(var(--primary) / 0.2),
+      0 0 50px hsl(var(--primary-glow) / 0.3);
+  }
+
+  .clock-digital {
+    @apply rounded-2xl p-8 text-center font-mono;
+    background: var(--gradient-dark);
+    border: 1px solid hsl(var(--border));
+    box-shadow: var(--shadow-glow);
+  }
+
+  .clock-neon {
+    @apply rounded-2xl p-8 text-center font-mono border-2;
+    background: hsl(var(--background));
+    border-color: hsl(var(--accent));
+    box-shadow: 
+      0 0 20px hsl(var(--accent) / 0.5),
+      inset 0 0 20px hsl(var(--accent) / 0.1);
+  }
+
+  .glow-primary { box-shadow: 0 0 20px hsl(var(--primary-glow) / 0.6); }
+  .glow-secondary { box-shadow: 0 0 20px hsl(var(--secondary-glow) / 0.6); }
+  .glow-accent { box-shadow: 0 0 20px hsl(var(--accent-glow) / 0.6); }
+
+  .text-glow-primary { text-shadow: 0 0 10px hsl(var(--primary-glow) / 0.8); }
+  .text-glow-secondary { text-shadow: 0 0 10px hsl(var(--secondary-glow) / 0.8); }
+  .text-glow-accent { text-shadow: 0 0 10px hsl(var(--accent-glow) / 0.8); }
+
+  .card-gothic {
+    @apply rounded-2xl border;
+    background: var(--gradient-dark);
+    border-color: hsl(var(--border));
+    box-shadow: var(--shadow-subtle);
+  }
+
+  .card-glow { @apply card-gothic; box-shadow: var(--shadow-glow); }
+
+  .weather-icon {
+    @apply transition-all duration-300 hover:scale-110;
+    filter: drop-shadow(0 0 8px currentColor);
+  }
 }

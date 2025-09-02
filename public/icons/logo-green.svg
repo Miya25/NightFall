@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Gothic Time logo - Green">
+  <defs>
+    <linearGradient id="gt-green" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#22c55e"/>
+      <stop offset="100%" stop-color="#0ea5a0"/>
+    </linearGradient>
+  </defs>
+  <rect x="0" y="0" width="256" height="256" rx="32" fill="#0b0b10"/>
+  <g transform="translate(28,28)">
+    <circle cx="100" cy="100" r="100" fill="url(#gt-green)" opacity="0.15"/>
+    <circle cx="100" cy="100" r="84" fill="#0b0b10" stroke="url(#gt-green)" stroke-width="6"/>
+    <g stroke="url(#gt-green)" stroke-linecap="round">
+      <line x1="100" y1="36" x2="100" y2="56" stroke-width="6"/>
+      <line x1="164" y1="100" x2="144" y2="100" stroke-width="6"/>
+      <line x1="36" y1="100" x2="56" y2="100" stroke-width="6"/>
+      <line x1="100" y1="164" x2="100" y2="144" stroke-width="6"/>
+    </g>
+    <g transform="translate(100,100)" stroke="url(#gt-green)" stroke-linecap="round">
+      <line x1="0" y1="0" x2="0" y2="-52" stroke-width="6"/>
+      <line x1="0" y1="0" x2="40" y2="0" stroke-width="4"/>
+      <circle cx="0" cy="0" r="6" fill="url(#gt-green)"/>
+    </g>
+  </g>
+</svg>
+
+
