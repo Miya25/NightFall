@@ -15,7 +15,6 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://lcock.ranveersoni.me"),
   title: {
     default: "Nightfall — Elegant Clock Dashboard",
     template: "%s | Nightfall",
@@ -33,13 +32,12 @@ export const metadata: Metadata = {
     "nextjs",
     "react",
   ],
-  authors: [{ name: "Ranveer Soni", url: "https://ranveersoni.me" }],
+  authors: [{ name: "Ranveer Soni" }],
   creator: "@ranveersoni98",
   openGraph: {
     title: "Nightfall — Elegant Clock Dashboard",
     description:
       "A dark, animated time dashboard with multiple clock styles, weather, and rotating facts.",
-    url: "https://clock.ranveersoni.me",
     siteName: "Nightfall",
     images: [
       { url: "/banner.png", width: 1200, height: 630, alt: "Nightfall" },
