@@ -1,8 +1,17 @@
-'use client';
+"use client";
 
-import { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 
-export function useLocalStorageState<T>(key: string, initialValue: T): [T, Dispatch<SetStateAction<T>>] {
+export function useLocalStorageState<T>(
+  key: string,
+  initialValue: T,
+): [T, Dispatch<SetStateAction<T>>] {
   const [state, setState] = useState<T>(initialValue);
 
   useEffect(() => {
@@ -14,17 +23,18 @@ export function useLocalStorageState<T>(key: string, initialValue: T): [T, Dispa
     } catch {}
   }, [key]);
 
-  const setAndStore: Dispatch<SetStateAction<T>> = useCallback((value) => {
-    setState((prev) => {
-      const next = value instanceof Function ? value(prev) as T : value;
-      try {
-        localStorage.setItem(key, JSON.stringify(next));
-      } catch {}
-      return next;
-    });
-  }, [key]);
+  const setAndStore: Dispatch<SetStateAction<T>> = useCallback(
+    (value) => {
+      setState((prev) => {
+        const next = value instanceof Function ? (value(prev) as T) : value;
+        try {
+          localStorage.setItem(key, JSON.stringify(next));
+        } catch {}
+        return next;
+      });
+    },
+    [key],
+  );
 
   return [state, setAndStore];
 }
-
-

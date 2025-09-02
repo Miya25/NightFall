@@ -1,38 +1,41 @@
 "use client";
-import { motion } from 'framer-motion';
-import type { ClockStyle } from '../Layout';
-import { FaClock, FaDesktop, FaBolt, FaSkull } from 'react-icons/fa';
+import { motion } from "framer-motion";
+import type { ClockStyle } from "../Layout";
+import { FaClock, FaDesktop, FaBolt, FaSkull } from "react-icons/fa";
 
 interface ClockStyleSelectorProps {
   value: ClockStyle;
   onChange: (style: ClockStyle) => void;
 }
 
-export const ClockStyleSelector = ({ value, onChange }: ClockStyleSelectorProps) => {
+export const ClockStyleSelector = ({
+  value,
+  onChange,
+}: ClockStyleSelectorProps) => {
   const styles = [
-    { 
-      id: 'analog' as ClockStyle, 
-      name: 'Analog', 
+    {
+      id: "analog" as ClockStyle,
+      name: "Analog",
       icon: FaClock,
-      description: 'Classic analog clock with hands'
+      description: "Classic analog clock with hands",
     },
-    { 
-      id: 'digital' as ClockStyle, 
-      name: 'Digital', 
+    {
+      id: "digital" as ClockStyle,
+      name: "Digital",
       icon: FaDesktop,
-      description: 'Modern digital display'
+      description: "Modern digital display",
     },
-    { 
-      id: 'neon' as ClockStyle, 
-      name: 'Neon', 
+    {
+      id: "neon" as ClockStyle,
+      name: "Neon",
       icon: FaBolt,
-      description: 'Cyberpunk neon glow'
+      description: "Cyberpunk neon glow",
     },
-    { 
-      id: 'gothic' as ClockStyle, 
-      name: 'Gothic', 
+    {
+      id: "gothic" as ClockStyle,
+      name: "Gothic",
       icon: FaSkull,
-      description: 'Dark gothic elegance'
+      description: "Dark gothic elegance",
     },
   ];
 
@@ -43,7 +46,7 @@ export const ClockStyleSelector = ({ value, onChange }: ClockStyleSelectorProps)
         {styles.map((style) => {
           const Icon = style.icon;
           const isActive = value === style.id;
-          
+
           return (
             <motion.button
               key={style.id}
@@ -52,21 +55,22 @@ export const ClockStyleSelector = ({ value, onChange }: ClockStyleSelectorProps)
               whileTap={{ scale: 0.95 }}
               className={`
                 relative px-4 py-2 rounded-lg border transition-all duration-300 flex items-center gap-2
-                ${isActive 
-                  ? 'bg-primary text-primary-foreground border-primary shadow-glow' 
-                  : 'bg-card/50 text-foreground border-border hover:bg-card/80 hover:border-primary/50 hover:text-white'
+                ${
+                  isActive
+                    ? "bg-primary text-primary-foreground border-primary shadow-glow"
+                    : "bg-card/50 text-foreground border-border hover:bg-card/80 hover:border-primary/50 hover:text-white"
                 }
               `}
               title={style.description}
             >
               <Icon className="w-4 h-4" />
               <span className="text-sm font-medium">{style.name}</span>
-              
+
               {isActive && (
                 <motion.div
                   layoutId="activeIndicator"
                   className="absolute -inset-px rounded-lg bg-gradient-primary opacity-20 -z-10"
-                  transition={{ type: 'spring', duration: 0.4 }}
+                  transition={{ type: "spring", duration: 0.4 }}
                 />
               )}
             </motion.button>

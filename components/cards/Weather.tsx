@@ -1,15 +1,23 @@
 "use client";
-import { useEffect, useMemo, useState } from 'react';
-import { motion } from 'framer-motion';
-import { WiDaySunny, WiCloudy, WiRain, WiSnow, WiThermometer, WiHumidity, WiStrongWind } from 'react-icons/wi';
-import { FaMapMarkerAlt, FaSyncAlt } from 'react-icons/fa';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect, useMemo, useState } from "react";
+import { motion } from "framer-motion";
+import {
+  WiDaySunny,
+  WiCloudy,
+  WiRain,
+  WiSnow,
+  WiThermometer,
+  WiHumidity,
+  WiStrongWind,
+} from "react-icons/wi";
+import { FaMapMarkerAlt, FaSyncAlt } from "react-icons/fa";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 interface WeatherData {
   temperature: number; // Celsius
-  condition: 'sunny' | 'cloudy' | 'rainy' | 'snowy';
+  condition: "sunny" | "cloudy" | "rainy" | "snowy";
   humidity: number; // percent
   windSpeed: number; // km/h
   location: string;
@@ -19,20 +27,29 @@ interface WeatherWidgetProps {
   onWeatherUpdate?: (weather: WeatherData | null) => void;
 }
 
-async function geocodeCity(query: string): Promise<{ name: string; latitude: number; longitude: number } | null> {
+async function geocodeCity(
+  query: string,
+): Promise<{ name: string; latitude: number; longitude: number } | null> {
   const url = `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(query)}&count=1&language=en&format=json`;
-  const res = await fetch(url, { cache: 'no-store' });
+  const res = await fetch(url, { cache: "no-store" });
   if (!res.ok) return null;
   const data = await res.json();
   const first = data?.results?.[0];
   if (!first) return null;
-  return { name: `${first.name}${first.country ? ', ' + first.country : ''}`, latitude: first.latitude, longitude: first.longitude };
+  return {
+    name: `${first.name}${first.country ? ", " + first.country : ""}`,
+    latitude: first.latitude,
+    longitude: first.longitude,
+  };
 }
 
-async function getWeatherByCoords(lat: number, lon: number): Promise<{ tempC: number; windKmh: number; humidity: number; code: number }> {
+async function getWeatherByCoords(
+  lat: number,
+  lon: number,
+): Promise<{ tempC: number; windKmh: number; humidity: number; code: number }> {
   const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code&wind_speed_unit=kmh&timezone=auto`;
-  const res = await fetch(url, { cache: 'no-store' });
-  if (!res.ok) throw new Error('Weather fetch failed');
+  const res = await fetch(url, { cache: "no-store" });
+  if (!res.ok) throw new Error("Weather fetch failed");
   const data = await res.json();
   return {
     tempC: data?.current?.temperature_2m,
@@ -42,55 +59,66 @@ async function getWeatherByCoords(lat: number, lon: number): Promise<{ tempC: nu
   };
 }
 
-function mapWmoToCondition(code: number): WeatherData['condition'] {
+function mapWmoToCondition(code: number): WeatherData["condition"] {
   // Simplified mapping
-  if ([0].includes(code)) return 'sunny';
-  if ([1,2,3,45,48].includes(code)) return 'cloudy';
-  if ([51,53,55,61,63,65,80,81,82].includes(code)) return 'rainy';
-  if ([71,73,75,77,85,86].includes(code)) return 'snowy';
-  return 'cloudy';
+  if ([0].includes(code)) return "sunny";
+  if ([1, 2, 3, 45, 48].includes(code)) return "cloudy";
+  if ([51, 53, 55, 61, 63, 65, 80, 81, 82].includes(code)) return "rainy";
+  if ([71, 73, 75, 77, 85, 86].includes(code)) return "snowy";
+  return "cloudy";
 }
 
 export const WeatherWidget = ({ onWeatherUpdate }: WeatherWidgetProps) => {
   const queryClient = useQueryClient();
-  const [customLocation, setCustomLocation] = useState('');
+  const [customLocation, setCustomLocation] = useState("");
   const [showLocationInput, setShowLocationInput] = useState(false);
-  const [manualCoords, setManualCoords] = useState<{ lat: number; lon: number; label: string } | null>(null);
+  const [manualCoords, setManualCoords] = useState<{
+    lat: number;
+    lon: number;
+    label: string;
+  } | null>(null);
 
   useEffect(() => {
     // prime caches for geolocation-based weather
     queryClient.prefetchQuery({
-      queryKey: ['geo']
+      queryKey: ["geo"],
     });
   }, [queryClient]);
 
   const { data: browserPosition } = useQuery({
-    queryKey: ['browser-location'],
-    queryFn: () => new Promise<{ lat: number; lon: number }>((resolve, reject) => {
-      if (!navigator.geolocation) {
-        reject(new Error('Geolocation is not supported'));
-        return;
-      }
-      navigator.geolocation.getCurrentPosition(
-        (pos) => resolve({ lat: pos.coords.latitude, lon: pos.coords.longitude }),
-        () => reject(new Error('Permission denied or unavailable')),
-        { timeout: 8000 }
-      );
-    }),
+    queryKey: ["browser-location"],
+    queryFn: () =>
+      new Promise<{ lat: number; lon: number }>((resolve, reject) => {
+        if (!navigator.geolocation) {
+          reject(new Error("Geolocation is not supported"));
+          return;
+        }
+        navigator.geolocation.getCurrentPosition(
+          (pos) =>
+            resolve({ lat: pos.coords.latitude, lon: pos.coords.longitude }),
+          () => reject(new Error("Permission denied or unavailable")),
+          { timeout: 8000 },
+        );
+      }),
     staleTime: 1000 * 60 * 10,
-    retry: 0
+    retry: 0,
   });
 
   const target = useMemo(() => {
     if (manualCoords) return manualCoords;
-    if (browserPosition) return { lat: browserPosition.lat, lon: browserPosition.lon, label: 'Your Location' };
+    if (browserPosition)
+      return {
+        lat: browserPosition.lat,
+        lon: browserPosition.lon,
+        label: "Your Location",
+      };
     return null;
   }, [manualCoords, browserPosition]);
 
   const weatherQuery = useQuery({
-    queryKey: ['weather', target?.lat, target?.lon],
+    queryKey: ["weather", target?.lat, target?.lon],
     queryFn: async () => {
-      if (!target) throw new Error('no-target');
+      if (!target) throw new Error("no-target");
       const current = await getWeatherByCoords(target.lat, target.lon);
       const condition = mapWmoToCondition(current.code);
       const result: WeatherData = {
@@ -117,25 +145,54 @@ export const WeatherWidget = ({ onWeatherUpdate }: WeatherWidgetProps) => {
     if (!q) return;
     const geo = await geocodeCity(q);
     if (geo) {
-      setManualCoords({ lat: geo.latitude, lon: geo.longitude, label: geo.name });
+      setManualCoords({
+        lat: geo.latitude,
+        lon: geo.longitude,
+        label: geo.name,
+      });
     }
     setShowLocationInput(false);
-    setCustomLocation('');
+    setCustomLocation("");
   };
 
   const getWeatherIcon = (condition: string) => {
-    const iconProps = { size: 48, className: 'weather-icon' };
+    const iconProps = { size: 48, className: "weather-icon" };
     switch (condition) {
-      case 'sunny':
-        return <WiDaySunny {...iconProps} className={`${iconProps.className} text-weather-sunny`} />;
-      case 'cloudy':
-        return <WiCloudy {...iconProps} className={`${iconProps.className} text-weather-cloudy`} />;
-      case 'rainy':
-        return <WiRain {...iconProps} className={`${iconProps.className} text-weather-rainy`} />;
-      case 'snowy':
-        return <WiSnow {...iconProps} className={`${iconProps.className} text-weather-snowy`} />;
+      case "sunny":
+        return (
+          <WiDaySunny
+            {...iconProps}
+            className={`${iconProps.className} text-weather-sunny`}
+          />
+        );
+      case "cloudy":
+        return (
+          <WiCloudy
+            {...iconProps}
+            className={`${iconProps.className} text-weather-cloudy`}
+          />
+        );
+      case "rainy":
+        return (
+          <WiRain
+            {...iconProps}
+            className={`${iconProps.className} text-weather-rainy`}
+          />
+        );
+      case "snowy":
+        return (
+          <WiSnow
+            {...iconProps}
+            className={`${iconProps.className} text-weather-snowy`}
+          />
+        );
       default:
-        return <WiCloudy {...iconProps} className={`${iconProps.className} text-weather-cloudy`} />;
+        return (
+          <WiCloudy
+            {...iconProps}
+            className={`${iconProps.className} text-weather-cloudy`}
+          />
+        );
     }
   };
 
@@ -146,7 +203,7 @@ export const WeatherWidget = ({ onWeatherUpdate }: WeatherWidgetProps) => {
         <div className="flex items-center justify-center h-32">
           <motion.div
             animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: 'linear' }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
             className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full"
           />
         </div>
@@ -192,7 +249,11 @@ export const WeatherWidget = ({ onWeatherUpdate }: WeatherWidgetProps) => {
           >
             <motion.div
               animate={{ rotate: weatherQuery.isFetching ? 360 : 0 }}
-              transition={{ duration: 1, repeat: weatherQuery.isFetching ? Infinity : 0, ease: 'linear' }}
+              transition={{
+                duration: 1,
+                repeat: weatherQuery.isFetching ? Infinity : 0,
+                ease: "linear",
+              }}
             >
               <FaSyncAlt className="w-4 h-4" />
             </motion.div>
@@ -203,7 +264,7 @@ export const WeatherWidget = ({ onWeatherUpdate }: WeatherWidgetProps) => {
       {showLocationInput && (
         <motion.form
           initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: 'auto' }}
+          animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
           onSubmit={handleLocationSubmit}
           className="mb-4 flex gap-2"
@@ -220,12 +281,12 @@ export const WeatherWidget = ({ onWeatherUpdate }: WeatherWidgetProps) => {
           </Button>
         </motion.form>
       )}
-      
+
       <div className="text-center mb-4">
         <motion.div
           initial={{ scale: 0 }}
           animate={{ scale: 1 }}
-          transition={{ delay: 0.2, type: 'spring' }}
+          transition={{ delay: 0.2, type: "spring" }}
           className="mb-2"
         >
           {getWeatherIcon(weatherQuery.data.condition)}
@@ -238,29 +299,35 @@ export const WeatherWidget = ({ onWeatherUpdate }: WeatherWidgetProps) => {
         </div>
       </div>
 
-        <div className="space-y-3">
+      <div className="space-y-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-secondary group-hover:text-white transition-colors">
             <WiThermometer size={20} />
             <span className="text-sm">Feels like</span>
           </div>
-          <span className="text-sm font-medium group-hover:text-white transition-colors">{weatherQuery.data.temperature}°C</span>
+          <span className="text-sm font-medium group-hover:text-white transition-colors">
+            {weatherQuery.data.temperature}°C
+          </span>
         </div>
-        
+
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-secondary group-hover:text-white transition-colors">
             <WiHumidity size={20} />
             <span className="text-sm">Humidity</span>
           </div>
-          <span className="text-sm font-medium group-hover:text-white transition-colors">{weatherQuery.data.humidity}%</span>
+          <span className="text-sm font-medium group-hover:text-white transition-colors">
+            {weatherQuery.data.humidity}%
+          </span>
         </div>
-        
+
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2 text-secondary group-hover:text-white transition-colors">
             <WiStrongWind size={20} />
             <span className="text-sm">Wind</span>
           </div>
-          <span className="text-sm font-medium group-hover:text-white transition-colors">{weatherQuery.data.windSpeed} km/h</span>
+          <span className="text-sm font-medium group-hover:text-white transition-colors">
+            {weatherQuery.data.windSpeed} km/h
+          </span>
         </div>
       </div>
 

@@ -108,11 +108,31 @@
 
   :root {
     --radius: 1rem;
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
-    --gradient-secondary: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--secondary-glow)));
-    --gradient-accent: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--accent-glow)));
-    --gradient-dark: linear-gradient(135deg, hsl(var(--background)), hsl(var(--card)));
-    --gradient-glow: radial-gradient(circle at center, hsl(var(--primary) / 0.3), transparent 70%);
+    --gradient-primary: linear-gradient(
+      135deg,
+      hsl(var(--primary)),
+      hsl(var(--primary-glow))
+    );
+    --gradient-secondary: linear-gradient(
+      135deg,
+      hsl(var(--secondary)),
+      hsl(var(--secondary-glow))
+    );
+    --gradient-accent: linear-gradient(
+      135deg,
+      hsl(var(--accent)),
+      hsl(var(--accent-glow))
+    );
+    --gradient-dark: linear-gradient(
+      135deg,
+      hsl(var(--background)),
+      hsl(var(--card))
+    );
+    --gradient-glow: radial-gradient(
+      circle at center,
+      hsl(var(--primary) / 0.3),
+      transparent 70%
+    );
     --clock-face: 240 12% 10%;
     --clock-numbers: 280 15% 75%;
     --clock-hands: 280 80% 65%;
@@ -129,34 +149,62 @@
 }
 
 @layer base {
-  * { @apply border-border; }
-  
+  * {
+    @apply border-border;
+  }
+
   body {
     @apply bg-background text-foreground overflow-x-hidden;
-    background: linear-gradient(135deg, hsl(var(--background)), hsl(var(--card)));
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: linear-gradient(
+      135deg,
+      hsl(var(--background)),
+      hsl(var(--card))
+    );
+    font-family:
+      "Inter",
+      -apple-system,
+      BlinkMacSystemFont,
+      sans-serif;
   }
 
-  .gothic { @apply theme-gothic; }
-  .blue { @apply theme-blue; }
-  .red { @apply theme-red; }
-  .green { @apply theme-green; }
-
-  ::-webkit-scrollbar { width: 8px; }
-  ::-webkit-scrollbar-track { @apply bg-muted rounded-full; }
-  ::-webkit-scrollbar-thumb { 
-    background: var(--gradient-primary); 
-    @apply rounded-full; 
+  .gothic {
+    @apply theme-gothic;
   }
-  ::-webkit-scrollbar-thumb:hover { background: var(--gradient-secondary); }
+  .blue {
+    @apply theme-blue;
+  }
+  .red {
+    @apply theme-red;
+  }
+  .green {
+    @apply theme-green;
+  }
+
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-muted rounded-full;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: var(--gradient-primary);
+    @apply rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--gradient-secondary);
+  }
 }
 
 @layer components {
   /* ... keep existing code (clock styles and components) */
   .clock-analog {
     @apply relative w-full h-full rounded-full border-4 border-primary/30 shadow-lg;
-    background: radial-gradient(circle, hsl(var(--clock-face)), hsl(var(--background)));
-    box-shadow: 
+    background: radial-gradient(
+      circle,
+      hsl(var(--clock-face)),
+      hsl(var(--background))
+    );
+    box-shadow:
       inset 0 0 30px hsl(var(--primary) / 0.2),
       0 0 50px hsl(var(--primary-glow) / 0.3);
   }
@@ -172,18 +220,30 @@
     @apply rounded-2xl p-8 text-center font-mono border-2;
     background: hsl(var(--background));
     border-color: hsl(var(--accent));
-    box-shadow: 
+    box-shadow:
       0 0 20px hsl(var(--accent) / 0.5),
       inset 0 0 20px hsl(var(--accent) / 0.1);
   }
 
-  .glow-primary { box-shadow: 0 0 20px hsl(var(--primary-glow) / 0.6); }
-  .glow-secondary { box-shadow: 0 0 20px hsl(var(--secondary-glow) / 0.6); }
-  .glow-accent { box-shadow: 0 0 20px hsl(var(--accent-glow) / 0.6); }
+  .glow-primary {
+    box-shadow: 0 0 20px hsl(var(--primary-glow) / 0.6);
+  }
+  .glow-secondary {
+    box-shadow: 0 0 20px hsl(var(--secondary-glow) / 0.6);
+  }
+  .glow-accent {
+    box-shadow: 0 0 20px hsl(var(--accent-glow) / 0.6);
+  }
 
-  .text-glow-primary { text-shadow: 0 0 10px hsl(var(--primary-glow) / 0.8); }
-  .text-glow-secondary { text-shadow: 0 0 10px hsl(var(--secondary-glow) / 0.8); }
-  .text-glow-accent { text-shadow: 0 0 10px hsl(var(--accent-glow) / 0.8); }
+  .text-glow-primary {
+    text-shadow: 0 0 10px hsl(var(--primary-glow) / 0.8);
+  }
+  .text-glow-secondary {
+    text-shadow: 0 0 10px hsl(var(--secondary-glow) / 0.8);
+  }
+  .text-glow-accent {
+    text-shadow: 0 0 10px hsl(var(--accent-glow) / 0.8);
+  }
 
   .card-gothic {
     @apply rounded-2xl border;
@@ -192,7 +252,10 @@
     box-shadow: var(--shadow-subtle);
   }
 
-  .card-glow { @apply card-gothic; box-shadow: var(--shadow-glow); }
+  .card-glow {
+    @apply card-gothic;
+    box-shadow: var(--shadow-glow);
+  }
 
   .weather-icon {
     @apply transition-all duration-300 hover:scale-110;

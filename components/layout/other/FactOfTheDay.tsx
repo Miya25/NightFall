@@ -1,9 +1,14 @@
 "use client";
 
-import { useState, useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaLightbulb, FaSyncAlt, FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { useQuery } from '@tanstack/react-query';
+import { useState, useEffect, useMemo } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  FaLightbulb,
+  FaSyncAlt,
+  FaChevronLeft,
+  FaChevronRight,
+} from "react-icons/fa";
+import { useQuery } from "@tanstack/react-query";
 
 interface Fact {
   text: string;
@@ -16,30 +21,40 @@ export const FactOfTheDay = () => {
 
   const fetchFacts = async (count: number): Promise<Fact[]> => {
     const requests = Array.from({ length: count }).map(async () => {
-      const res = await fetch('https://uselessfacts.jsph.pl/api/v2/facts/random?language=en', {
-        cache: 'no-store'
-      });
+      const res = await fetch(
+        "https://uselessfacts.jsph.pl/api/v2/facts/random?language=en",
+        {
+          cache: "no-store",
+        },
+      );
       if (!res.ok) {
-        throw new Error('Failed to fetch fact');
+        throw new Error("Failed to fetch fact");
       }
       const data = await res.json();
       return {
-        text: data?.text ?? 'Interesting fact unavailable right now.',
-        category: data?.source ?? 'General'
+        text: data?.text ?? "Interesting fact unavailable right now.",
+        category: data?.source ?? "General",
       } as Fact;
     });
     const results = await Promise.allSettled(requests);
     const successful = results
-      .filter((r): r is PromiseFulfilledResult<Fact> => r.status === 'fulfilled')
+      .filter(
+        (r): r is PromiseFulfilledResult<Fact> => r.status === "fulfilled",
+      )
       .map((r) => r.value);
     if (successful.length === 0) {
-      throw new Error('No facts available');
+      throw new Error("No facts available");
     }
     return successful;
   };
 
-  const { data: facts, isLoading, refetch, isRefetching } = useQuery({
-    queryKey: ['facts', factsToShow],
+  const {
+    data: facts,
+    isLoading,
+    refetch,
+    isRefetching,
+  } = useQuery({
+    queryKey: ["facts", factsToShow],
     queryFn: () => fetchFacts(factsToShow),
     staleTime: 1000 * 60 * 10,
     refetchInterval: 1000 * 60 * 60,
@@ -69,7 +84,7 @@ export const FactOfTheDay = () => {
     >
       {/* Background decoration */}
       <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-accent opacity-10 rounded-full -translate-y-16 translate-x-16"></div>
-      
+
       <div className="relative z-10">
         <div className="flex items-center justify-between mb-4">
           <h3 className="text-lg font-semibold text-primary text-glow-primary flex items-center gap-2">
@@ -88,7 +103,11 @@ export const FactOfTheDay = () => {
           >
             <motion.div
               animate={{ rotate: loading ? 360 : 0 }}
-              transition={{ duration: 1, repeat: loading ? Infinity : 0, ease: 'linear' }}
+              transition={{
+                duration: 1,
+                repeat: loading ? Infinity : 0,
+                ease: "linear",
+              }}
             >
               <FaSyncAlt className="text-secondary w-4 h-4" />
             </motion.div>
@@ -107,17 +126,27 @@ export const FactOfTheDay = () => {
               <button
                 aria-label="Previous fact"
                 className="p-2 rounded-full bg-secondary/20 hover:bg-secondary/30 transition-colors"
-                onClick={() => setCurrentIndex((prev) => (prev - 1 + (facts?.length ?? 1)) % (facts?.length ?? 1))}
+                onClick={() =>
+                  setCurrentIndex(
+                    (prev) =>
+                      (prev - 1 + (facts?.length ?? 1)) % (facts?.length ?? 1),
+                  )
+                }
               >
                 <FaChevronLeft className="w-4 h-4 text-secondary" />
               </button>
               <div className="text-xs text-muted-foreground">
-                {((currentIndex % (facts?.length ?? 1)) + 1).toString().padStart(2, '0')} / {(facts?.length ?? 1).toString().padStart(2, '0')}
+                {((currentIndex % (facts?.length ?? 1)) + 1)
+                  .toString()
+                  .padStart(2, "0")}{" "}
+                / {(facts?.length ?? 1).toString().padStart(2, "0")}
               </div>
               <button
                 aria-label="Next fact"
                 className="p-2 rounded-full bg-secondary/20 hover:bg-secondary/30 transition-colors"
-                onClick={() => setCurrentIndex((prev) => ((prev + 1) % (facts?.length ?? 1)))}
+                onClick={() =>
+                  setCurrentIndex((prev) => (prev + 1) % (facts?.length ?? 1))
+                }
               >
                 <FaChevronRight className="w-4 h-4 text-secondary" />
               </button>
@@ -148,7 +177,7 @@ export const FactOfTheDay = () => {
                   <button
                     key={idx}
                     aria-label={`Go to fact ${idx + 1}`}
-                    className={`h-2 rounded-full transition-all ${idx === (currentIndex % facts.length) ? 'w-4 bg-accent' : 'w-2 bg-muted'}`}
+                    className={`h-2 rounded-full transition-all ${idx === currentIndex % facts.length ? "w-4 bg-accent" : "w-2 bg-muted"}`}
                     onClick={() => setCurrentIndex(idx)}
                   />
                 ))}

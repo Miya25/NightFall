@@ -3,6 +3,7 @@
 Dark, elegant, and animated. Features a rich clock with multiple styles, live weather, and rotating facts fetched with React Query.
 
 ### Features
+
 - **Clock styles**: analog, digital, neon, gothic (animated with framer-motion)
 - **Theme system**: custom themes via `next-themes` with a `ThemeSwitcher`
 - **Weather widget**: location-aware mock data with interactive refresh and quick city input
@@ -10,6 +11,7 @@ Dark, elegant, and animated. Features a rich clock with multiple styles, live we
 - **React Query Devtools**: toggleable devtools baked in (bottom-right)
 
 ### Tech stack
+
 - **Next.js App Router** + TypeScript
 - **Tailwind CSS**
 - **Framer Motion** animations
@@ -18,6 +20,7 @@ Dark, elegant, and animated. Features a rich clock with multiple styles, live we
 - **Bun** for fast dev/install
 
 ### Quick start
+
 ```bash
 # install deps
 bun install
@@ -33,6 +36,7 @@ bun run start
 Open `http://localhost:3000`.
 
 ### Project layout
+
 ```
 app/
   layout.tsx          # wraps with AppProviders (Theme + React Query)
@@ -55,9 +59,11 @@ components/
 ```
 
 ### Environment
+
 No API keys required. Facts use `https://uselessfacts.jsph.pl` (no auth). Weather uses mock data plus browser geolocation when available.
 
 ### Scripts
+
 ```json
 {
   "dev": "next dev",
@@ -68,9 +74,11 @@ No API keys required. Facts use `https://uselessfacts.jsph.pl` (no auth). Weathe
 ```
 
 ### Notes
+
 - The React Query Devtools button appears at the bottom-right.
 - To change default theme or available themes, edit `components/others/ThemeProvider.tsx`.
 - To tweak fact frequency or count, see `FactOfTheDay.tsx` (`factsToShow`, auto-rotate interval, `refetchInterval`).
 
 ### License
+
 MIT

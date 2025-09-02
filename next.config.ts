@@ -1,6 +1,6 @@
 import type { NextConfig } from "next";
-import withPWA from 'next-pwa';
-import path from 'path';
+import withPWA from "next-pwa";
+import path from "path";
 
 const baseConfig: NextConfig = {
   reactStrictMode: true,
@@ -10,10 +10,10 @@ const baseConfig: NextConfig = {
   },
 };
 
-const isProd = process.env.NODE_ENV === 'production';
+const isProd = process.env.NODE_ENV === "production";
 
 const withPWAWrapped = withPWA({
-  dest: 'public',
+  dest: "public",
   register: true,
   skipWaiting: true,
   disable: !isProd,
