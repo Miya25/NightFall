@@ -42,10 +42,21 @@ export const MoonPhaseTooltip = ({
   };
 
   return (
-    <TooltipProvider delayDuration={120}>
+    <TooltipProvider delayDuration={120} skipDelayDuration={300}>
       <Tooltip>
         <TooltipTrigger asChild>
-          <motion.div className="cursor-help">{children}</motion.div>
+          <motion.div 
+            className="cursor-help touch-manipulation select-none" 
+            tabIndex={0}
+            role="button"
+            aria-label={`Moon phase: ${formatPhaseName(phase.phase)}`}
+            onTouchStart={(e) => {
+              // Ensure touch events work properly
+              e.currentTarget.focus();
+            }}
+          >
+            {children}
+          </motion.div>
         </TooltipTrigger>
         <TooltipContent
           side="right"
@@ -54,6 +65,8 @@ export const MoonPhaseTooltip = ({
           sideOffset={8}
           avoidCollisions
           collisionPadding={8}
+          onPointerDownOutside={(e) => e.preventDefault()}
+          onEscapeKeyDown={(e) => e.preventDefault()}
         >
           <div className="flex items-center gap-3">
             <div className="text-2xl">{phase.icon}</div>

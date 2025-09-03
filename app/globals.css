@@ -190,6 +190,31 @@
       word-wrap: break-word;
       overflow-wrap: break-word;
     }
+
+    /* Mobile tooltip optimizations */
+    [data-radix-tooltip-content] {
+      font-size: 14px;
+      max-width: 280px;
+      padding: 8px 12px;
+    }
+
+    /* Ensure tooltip content is readable on small screens */
+    [data-radix-tooltip-content] .text-sm {
+      font-size: 12px;
+      line-height: 1.4;
+    }
+  }
+
+  /* Global tooltip styles */
+  [data-radix-tooltip-content] {
+    z-index: 9999 !important;
+    pointer-events: auto !important;
+  }
+
+  /* Ensure tooltip triggers are touch-friendly */
+  [data-radix-tooltip-trigger] {
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
   }
 
   .gothic {
